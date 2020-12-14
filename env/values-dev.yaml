@@ -1,0 +1,6 @@
+#@data/values
+---
+env: dev
+namespace: spring-petclinic
+svc_external_ip: false
+create_ingress: false

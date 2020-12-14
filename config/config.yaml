@@ -1,0 +1,9 @@
+#@ load("@ytt:data", "data")
+#! vals: #@ data.values
+
+#@ def labels():
+app: echo
+org: test
+#@ end 
+
+#! labels: #@ labels()

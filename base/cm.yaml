@@ -1,0 +1,12 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: v1
+data:
+  RUNTIME_ENV: dev
+kind: ConfigMap
+metadata:
+  labels:
+    app: spring-petclinic-dev
+  name: runtime-env-cm
+  namespace: #@ data.values.namespace

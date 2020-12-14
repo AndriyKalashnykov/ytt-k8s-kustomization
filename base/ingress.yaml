@@ -1,0 +1,16 @@
+#@ load("@ytt:data", "data")
+
+#@ if/end data.values.create_ingress:
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: http-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: spring-petclinic-svc
+          servicePort: 8080
