@@ -1,24 +1,29 @@
 
 #@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+#@ prefix = data.values.optionalPrefix or ""
+
+#@ def labels():
+app: #@ prefix + str(data.values.app_name)
+#@ end 
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-petclinic
+  name: #@ prefix + str("spring-petclinic")
   namespace: #@ data.values.namespace
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: spring-petclinic
+    matchLabels: #@ labels()
   template:
     metadata:
-      labels:
-        app: spring-petclinic
+      labels:  #@ labels()
     spec:
       containers:  
       - name: spring-petclinic
-        image: docker.io/andriykalashnykov/spring-petclinic:1.1
+        image: #@ data.values.image
         ports:
           - name: http
             containerPort: 8080        

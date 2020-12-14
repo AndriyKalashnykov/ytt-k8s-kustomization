@@ -1,16 +1,23 @@
 #@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+#@ prefix = data.values.optionalPrefix or ""
+
+#@ def labels():
+app: #@ prefix + str(data.values.app_name)
+#@ end 
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-petclinic-svc
-  namespace: #@ data.values.namespace
+  name: #@ prefix + str("spring-petclinic")
+  namespace: #@ str(data.values.namespace)
+  labels: #@ labels()
 spec:
   ports:
   - port: 8080
     targetPort: 8080
-  selector:
-    app: spring-petclinic
+  selector: #@ labels()
   #@ if data.values.svc_external_ip:
   type: LoadBalancer
   #@ else:

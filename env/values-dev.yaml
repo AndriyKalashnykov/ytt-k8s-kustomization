@@ -1,6 +1,9 @@
 #@data/values
 ---
 env: dev
-namespace: spring-petclinic
+optionalPrefix: dev-
+namespace: dev-spring-petclinic
+app_name: spring-petclinic-app
 svc_external_ip: false
-create_ingress: false
+create_ingress: true
+image: docker.io/andriykalashnykov/spring-petclinic:1.1
