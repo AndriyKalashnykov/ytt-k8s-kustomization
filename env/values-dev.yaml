@@ -1,9 +1,12 @@
 #@data/values
 ---
+ver_num: v1.0.1
+build_num: 675
 env: dev
-optionalPrefix: dev-
+prefix: dev-
 namespace: dev-spring-petclinic
 app_name: spring-petclinic-app
 svc_external_ip: false
 create_ingress: true
 image: docker.io/andriykalashnykov/spring-petclinic:1.1
+replicas: 1

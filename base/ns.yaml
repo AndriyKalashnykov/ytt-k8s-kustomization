@@ -1,7 +1,0 @@
-#@ load("@ytt:data", "data")
-#@ load("@ytt:overlay", "overlay")
-
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: #@ data.values.namespace

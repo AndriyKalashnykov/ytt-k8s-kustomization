@@ -1,17 +1,21 @@
 #@ load("@ytt:data", "data")
 #@ load("@ytt:overlay", "overlay")
 
+#@ prefix = data.values.prefix or ""
+
 #@ if/end data.values.create_ingress:
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: http-ingress
+  name: #@ prefix + str("ingress")
+  labels: 
+    deployment_label: #@ prefix + str("ingress")
 spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path:  #@ str("/")  + data.values.env
         backend:
           serviceName: spring-petclinic-svc
           servicePort: 8080

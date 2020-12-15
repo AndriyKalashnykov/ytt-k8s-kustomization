@@ -1,6 +1,22 @@
 #@ load("@ytt:data", "data")
-#! vals: #@ data.values
+#@ load("@ytt:overlay", "overlay")
 
-#! labels: #@ labels()
+#@ prefix = data.values.prefix or ""
 
+#@overlay/match by=overlay.all,expects="1+"
+---
+metadata:
+  #@overlay/match missing_ok=True
+  labels:
+    #@overlay/match missing_ok=True
+    app: #@ prefix + str(data.values.app_name)
+    #@overlay/match missing_ok=True
+    build: #@  str(data.values.build_num)
+    #@overlay/match missing_ok=True
+    ver: #@ str(data.values.ver_num)
 
+#@overlay/match by=overlay.all,expects="1+"
+---
+metadata:
+  #@overlay/match missing_ok=True
+  namespace: #@ data.values.namespace

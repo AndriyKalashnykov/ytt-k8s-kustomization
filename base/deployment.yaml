@@ -2,24 +2,25 @@
 #@ load("@ytt:data", "data")
 #@ load("@ytt:overlay", "overlay")
 
-#@ prefix = data.values.optionalPrefix or ""
+#@ prefix = data.values.prefix or ""
 
-#@ def labels():
+#@ def selector_labels():
 app: #@ prefix + str(data.values.app_name)
 #@ end 
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: #@ prefix + str("spring-petclinic")
-  namespace: #@ data.values.namespace
+  name: #@ prefix + str("spring-petclinic-deploy")
+  labels: 
+    deployment_label: #@ prefix + str("deployment")
 spec:
-  replicas: 1
+  replicas: #@ data.values.replicas
   selector:
-    matchLabels: #@ labels()
+    matchLabels: #@ selector_labels()
   template:
     metadata:
-      labels:  #@ labels()
+      labels: #@ selector_labels()
     spec:
       containers:  
       - name: spring-petclinic
@@ -45,8 +46,8 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: db-secret
+              name: #@ prefix + str("spring-petclinic-secret")
               key: db-password       
         envFrom: 
           - configMapRef: 
-              name:  runtime-env-cm
+              name:  #@ prefix + str("spring-petclinic-cm")

@@ -1,3 +1,4 @@
 #!/bin/bash
 
-WAIT=${1:-120}
+ENV=${1:-dev}
+APP_NAME=${ENV}-petclinic
