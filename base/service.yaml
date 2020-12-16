@@ -4,16 +4,16 @@
 #@ prefix = data.values.prefix or ""
 
 #@ def selector_labels():
-app: #@ prefix + str(data.values.app_name)
+app: #@ prefix + data.values.app_name
 #@ end 
 
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: #@ prefix + str("spring-petclinic-svc")
+  name: #@ prefix + "spring-petclinic-svc"
   labels: 
-     service_label:  #@ prefix + str("svc")
+     service_label:  #@ prefix + "svc"
 spec:
   ports:
   - port: 8080

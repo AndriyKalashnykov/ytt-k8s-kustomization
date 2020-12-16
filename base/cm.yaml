@@ -9,6 +9,6 @@ kind: ConfigMap
 data:
   RUNTIME_ENV: #@ data.values.env
 metadata:
-  name: #@ prefix + str("spring-petclinic-cm")
+  name: #@ prefix + "spring-petclinic-cm"
   labels: 
-     service_label:  #@ prefix + str("cm")
+     service_label:  #@ prefix + "cm"

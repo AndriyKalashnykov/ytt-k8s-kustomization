@@ -5,15 +5,16 @@
 #@ prefix = data.values.prefix or ""
 
 #@ def selector_labels():
-app: #@ prefix + str(data.values.app_name)
+app: #@ prefix + data.values.app_name
 #@ end 
 
+#@overlay/match by=overlay.subset({"kind": "Deployment"}),expects="1+"
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: #@ prefix + str("spring-petclinic-deploy")
+  name: #@ prefix + "spring-petclinic-deploy"
   labels: 
-    deployment_label: #@ prefix + str("deployment")
+    deployment_label: #@ prefix + "deployment"
 spec:
   replicas: #@ data.values.replicas
   selector:
@@ -46,8 +47,16 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: #@ prefix + str("spring-petclinic-secret")
+              name: #@ prefix + "spring-petclinic-secret"
               key: db-password       
         envFrom: 
           - configMapRef: 
-              name:  #@ prefix + str("spring-petclinic-cm")
+              name:  #@ prefix + "spring-petclinic-cm"
+        #@ if data.values.env == "prod":
+        #@overlay/append 
+        strategy:
+          type: RollingUpdate
+          rollingUpdate:
+            maxSurge: 2        #! how many pods we can add at a time
+            maxUnavailable: 0  #! maxUnavailable define how many pods can be unavailable  during the rolling update
+        #@ end    

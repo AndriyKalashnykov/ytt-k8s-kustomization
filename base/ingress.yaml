@@ -8,14 +8,14 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: #@ prefix + str("ingress")
+  name: #@ prefix + "ingress"
   labels: 
-    deployment_label: #@ prefix + str("ingress")
+    deployment_label: #@ prefix + "ingress"
 spec:
   rules:
   - http:
       paths:
-      - path:  #@ str("/")  + data.values.env
+      - path:  #@ "/"  + data.values.env
         backend:
           serviceName: spring-petclinic-svc
           servicePort: 8080
