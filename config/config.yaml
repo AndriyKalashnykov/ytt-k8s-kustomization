@@ -2,10 +2,13 @@
 #@ load("@ytt:overlay", "overlay")
 
 #@ prefix = data.values.prefix or ""
+#@ suffix = data.values.suffix or ""
 
 #@overlay/match by=overlay.all,expects="1+"
 ---
 metadata:
+  #@overlay/replace via=lambda a,b: data.values.prefix + a + data.values.suffix
+  name:
   #@overlay/match missing_ok=True
   labels:
     #@overlay/match missing_ok=True

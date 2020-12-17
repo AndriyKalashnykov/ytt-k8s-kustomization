@@ -7,13 +7,12 @@
 app: #@ prefix + data.values.app_name
 #@ end 
 
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: #@ prefix + "spring-petclinic-svc"
+  name: spring-petclinic-svc
   labels: 
-     service_label:  #@ prefix + "svc"
+     obj_label: svc
 spec:
   ports:
   - port: 8080

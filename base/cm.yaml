@@ -1,14 +1,12 @@
 #@ load("@ytt:data", "data")
 #@ load("@ytt:overlay", "overlay")
 
-#@ prefix = data.values.prefix or ""
-
 ---
 apiVersion: v1
 kind: ConfigMap
 data:
   RUNTIME_ENV: #@ data.values.env
 metadata:
-  name: #@ prefix + "spring-petclinic-cm"
+  name: spring-petclinic-cm
   labels: 
-     service_label:  #@ prefix + "cm"
+     obj_label:  "cm"

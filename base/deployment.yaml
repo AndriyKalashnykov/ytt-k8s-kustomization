@@ -3,6 +3,7 @@
 #@ load("@ytt:overlay", "overlay")
 
 #@ prefix = data.values.prefix or ""
+#@ suffix = data.values.suffix or ""
 
 #@ def selector_labels():
 app: #@ prefix + data.values.app_name
@@ -12,9 +13,9 @@ app: #@ prefix + data.values.app_name
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: #@ prefix + "spring-petclinic-deploy"
+  name: spring-petclinic-deploy
   labels: 
-    deployment_label: #@ prefix + "deployment"
+    obj_label: deployment
 spec:
   replicas: #@ data.values.replicas
   selector:
@@ -47,11 +48,11 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: #@ prefix + "spring-petclinic-secret"
+              name: #@ prefix + "spring-petclinic-secret" + suffix
               key: db-password       
         envFrom: 
           - configMapRef: 
-              name:  #@ prefix + "spring-petclinic-cm"
+              name: #@ prefix + "spring-petclinic-cm" + suffix
         #@ if data.values.env == "prod":
         #@overlay/append 
         strategy:

@@ -4,6 +4,7 @@ ver_num: v1.0.1
 build_num: 675
 env: dev
 prefix: dev-
+suffix: ""
 namespace: dev-spring-petclinic
 app_name: spring-petclinic-app
 svc_external_ip: false
