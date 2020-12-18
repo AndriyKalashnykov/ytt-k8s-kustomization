@@ -11,3 +11,8 @@ svc_external_ip: false
 create_ingress: true
 image: docker.io/andriykalashnykov/spring-petclinic:1.1
 replicas: 1
+
+registry:
+  hostname: "docker.io"
+  username: "andriykalashnykov"
+  password: "<your-password-here>"
