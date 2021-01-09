@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# set -x
-
 LAUNCH_DIR=$(pwd); SCRIPT_DIR=$(dirname $0); cd $SCRIPT_DIR; SCRIPT_DIR=$(pwd); cd ..; SCRIPT_PARENT_DIR=$(pwd)
 . $SCRIPT_DIR/set-env.sh
 
