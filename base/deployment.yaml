@@ -60,4 +60,29 @@ spec:
           rollingUpdate:
             maxSurge: 2        #! how many pods we can add at a time
             maxUnavailable: 0  #! maxUnavailable define how many pods can be unavailable  during the rolling update
-        #@ end    
+        #@ end
+      - image: redis
+        imagePullPolicy: IfNotPresent
+        name: test-pod
+        resources: {}
+        envFrom: 
+
+#! overlay that removes envFrom when its value is null
+#@ deploy = overlay.subset({"kind": "Deployment"})
+#@ sts = overlay.subset({"kind": "StatefulSet"})
+#@overlay/match by=overlay.or_op(deploy, sts),expects="1+"
+---
+spec:
+  template:
+    spec:
+      #@overlay/match by=overlay.subset(None),expects="0+"
+      #@overlay/remove
+      volumes:
+      #@overlay/match by=overlay.subset(None),expects="0+"
+      #@overlay/remove
+      initContainers:
+      containers:
+      #@overlay/match by=overlay.subset({"envFrom": None }),when="1+"
+      -
+        #@overlay/remove
+        envFrom:
